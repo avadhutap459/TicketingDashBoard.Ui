@@ -1,0 +1,28 @@
+#wrapper {
+  min-height: 100vh;
+}
+
+.sidebar {
+  width: 260px;
+  min-height: 100vh;
+  transition: margin 0.25s;
+}
+
+#page-content-wrapper {
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    margin-left: -260px;
+  }
+  .sidebar.active {
+    margin-left: 0;
+  }
+}
+
+/* Highlight active link */
+a.active {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+}

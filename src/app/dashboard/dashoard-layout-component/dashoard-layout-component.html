@@ -1,0 +1,92 @@
+<div class="d-flex" id="wrapper">
+
+  <!-- Sidebar -->
+  <nav id="sidebar" class="bg-dark text-white sidebar">
+    <div class="sidebar-header p-3 fw-bold fs-4">
+      My Admin
+    </div>
+    <ul class="list-unstyled px-2">
+
+      <li>
+        <a routerLink="/dashboard" routerLinkActive="active"
+           class="text-decoration-none d-block py-2 px-3 text-white">
+           <i class="bi bi-speedometer2 me-2"></i> Dashboard
+        </a>
+      </li>
+
+      <!-- Menu With Submenu -->
+      <li>
+        <a class="text-decoration-none d-block py-2 px-3 text-white dropdown-toggle"
+           data-bs-toggle="collapse" href="#usersMenu">
+           <i class="bi bi-people me-2"></i> Users
+        </a>
+        <ul class="collapse list-unstyled ps-4" id="usersMenu">
+          <li><a routerLink="/users/list" routerLinkActive="active" class="d-block py-2 text-white">User List</a></li>
+          <li><a routerLink="/users/add" routerLinkActive="active" class="d-block py-2 text-white">Add User</a></li>
+        </ul>
+      </li>
+
+      <li>
+        <a routerLink="/payments" routerLinkActive="active"
+           class="text-decoration-none d-block py-2 px-3 text-white">
+           <i class="bi bi-cash-coin me-2"></i> Payments
+        </a>
+      </li>
+
+      <li>
+        <a class="text-decoration-none d-block py-2 px-3 text-white dropdown-toggle"
+           data-bs-toggle="collapse" href="#settingsMenu">
+           <i class="bi bi-gear me-2"></i> Settings
+        </a>
+        <ul class="collapse list-unstyled ps-4" id="settingsMenu">
+          <li><a routerLink="/profile" routerLinkActive="active" class="d-block py-2 text-white">Profile</a></li>
+          <li><a routerLink="/roles" routerLinkActive="active" class="d-block py-2 text-white">Role Management</a></li>
+        </ul>
+      </li>
+
+    </ul>
+  </nav>
+
+  <!-- Page Content -->
+  <div id="page-content-wrapper" class="flex-grow-1">
+
+    <!-- Top Navbar -->
+    <nav class="navbar navbar-expand navbar-light bg-white shadow-sm px-3">
+      <button class="btn btn-outline-primary me-3 d-md-none" id="menu-toggle">
+        <i class="bi bi-list"></i>
+      </button>
+      <span class="navbar-brand mb-0 h5">Admin Dashboard</span>
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link">Hello Admin</a></li>
+        <li class="nav-item"><button class="btn btn-outline-danger btn-sm ms-2">Logout</button></li>
+      </ul>
+    </nav>
+
+    <!-- Main Content With Chart -->
+    <div class="container-fluid p-4">
+      <div class="row g-4">
+        <div class="col-lg-8">
+          <div class="card shadow border-0 rounded-3">
+            <div class="card-body">
+              <h5 class="fw-bold mb-3">Sales Statistics</h5>
+              <canvas id="salesChart"></canvas> <!-- Graph Panel -->
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4">
+          <div class="card shadow border-0 rounded-3">
+            <div class="card-body">
+              <h5 class="fw-bold mb-3">Quick Stats</h5>
+              <p>Total Users: 254</p>
+              <p>Total Orders: 938</p>
+              <p>Pending: 42</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>
