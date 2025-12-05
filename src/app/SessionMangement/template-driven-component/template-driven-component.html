@@ -1,0 +1,132 @@
+<!-- template-driven.component.html -->
+<div class="container">
+    <div class="row align-items-center vh-100">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-body">
+                    <form #f="ngForm" (ngSubmit)="submit(f)" novalidate class="form-shell">
+
+                        <!-- Name -->
+                        <div class="field">
+                            <label for="name">Name</label>
+                            <input id="name" type="text" name="name" [(ngModel)]="model.name" required minlength="2"
+                                maxlength="50" pattern="^[A-Za-z\s'.-]+$" #name="ngModel"
+                                placeholder="Enter full name" />
+                            <div class="error" *ngIf="name.touched && name.invalid">
+                                <span *ngIf="name.errors?.['required']">Name is required.</span>
+                                <span *ngIf="name.errors?.['minlength']">Minimum 2 characters.</span>
+                                <span *ngIf="name.errors?.['maxlength']">Maximum 50 characters.</span>
+                                <span *ngIf="name.errors?.['pattern']">Only letters and spaces are allowed.</span>
+                            </div>
+                        </div>
+
+                        <!-- Date of Birth -->
+                        <div class="field">
+                            <label for="dob">Date of Birth</label>
+                            <input id="dob" type="date" name="dateOfBirth" [(ngModel)]="model.dateOfBirth" required
+                                [max]="maxDateStr" minAge="18" #dob="ngModel" />
+                            <div class="error" *ngIf="dob.touched && dob.invalid">
+                                <span *ngIf="dob.errors?.['required']">Date of Birth is required.</span>
+                                <span *ngIf="dob.errors?.['minAge']">
+                                    Must be at least {{ dob.errors?.['minAge'].requiredAge }} years old.
+                                    (Current age: {{ dob.errors?.['minAge'].actualAge }})
+                                </span>
+                                <span *ngIf="dob.errors?.['minAge']?.invalidDate">Invalid date.</span>
+                            </div>
+                        </div>
+
+                        <!-- Gender -->
+                        <div class="field">
+                            <label>Gender</label>
+                            <div class="inline">
+                                <label>
+                                    <input type="radio" name="gender" [(ngModel)]="model.gender" value="Male" required
+                                        #gender="ngModel" />
+                                    Male
+                                </label>
+                                <label>
+                                    <input type="radio" name="gender" [(ngModel)]="model.gender" value="Female"
+                                        required />
+                                    Female
+                                </label>
+                                <label>
+                                    <input type="radio" name="gender" [(ngModel)]="model.gender" value="Other"
+                                        required />
+                                    Other
+                                </label>
+                            </div>
+                            <div class="error" *ngIf="gender.touched && gender.invalid">
+                                <span *ngIf="gender.errors?.['required']">Gender is required.</span>
+                            </div>
+                        </div>
+
+                        <!-- Is Active -->
+                        <div class="field">
+                            <label class="checkbox">
+                                <input type="checkbox" name="isActive" [(ngModel)]="model.isActive" />
+                                Is Active
+                            </label>
+                        </div>
+
+                        <!-- Country -->
+                        <div class="field">
+                            <label for="country">Country</label>
+                            <select id="country" name="country" [(ngModel)]="model.country" required #country="ngModel">
+                                <option value="" disabled>Select country</option>
+                                <option *ngFor="let c of countries" [value]="c.code">{{ c.name }}</option>
+                            </select>
+                            <div class="error" *ngIf="country.touched && country.invalid">
+                                <span *ngIf="country.errors?.['required']">Country is required.</span>
+                            </div>
+                        </div>
+
+                        <!-- Photo -->
+                        <div class="field">
+                            <label for="photo">Photo (JPEG/PNG/WebP, ≤5MB)</label>
+                            <input id="photo" type="file" (change)="onFileSelected($event)" accept="image/*" />
+                            <div class="error"
+                                *ngIf="!model.photo && (f.submitted || name.touched || dob.touched || country.touched)">
+                                <span>Photo is required.</span>
+                            </div>
+                            <div class="error" *ngIf="photoErrors.fileType">Invalid file type.</div>
+
+                            <div class="error" *ngIf="photoErrors.fileSize as fs">
+                                File too large (max {{ fs.maxSizeMB }} MB).
+                            </div>
+
+                        </div>
+
+                        <!-- Certification (Multiselect) -->
+                        <div class="field">
+                            <label for="cert">Certification (select one or more)</label>
+                            <select id="cert" name="certification" [(ngModel)]="model.certification" multiple
+                                [minSelected]="1" #certification="ngModel" size="6">
+                                <option *ngFor="let cert of certifications" [value]="cert">{{ cert }}</option>
+                            </select>
+                            <div class="hint">Use Ctrl/Cmd + click to select multiple.</div>
+                            <div class="error" *ngIf="certification.touched && certification.invalid">
+                                <span *ngIf="certification.errors?.['minSelected']">
+                                    Please select at least {{ certification.errors?.['minSelected'].required }}
+                                    certification(s).
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Actions -->
+                        <div class="actions">
+                            <button type="submit"
+                                [disabled]="f.invalid || !model.photo || photoErrors.fileType || photoErrors.fileSize">Submit</button>
+                            <button type="button" (click)="reset(f)">Reset</button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Debug (optional) -->
+<pre class="debug">{{ model | json }}</pre>

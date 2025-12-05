@@ -1,0 +1,75 @@
+<form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+
+    <!-- Name -->
+    <div>
+        <label>Name:</label>
+        <input type="text" formControlName="name" />
+        <span *ngIf="f['name'].touched && f['name'].invalid">
+            Name is required (min 3 characters)
+        </span>
+    </div>
+
+    <!-- Gender -->
+    <div>
+        <label>Gender:</label>
+        <label>
+            <input type="radio" formControlName="gender" value="Male" /> Male
+        </label>
+        <label>
+            <input type="radio" formControlName="gender" value="Female" /> Female
+        </label>
+        <span *ngIf="f['gender'].touched && f['gender'].invalid">
+            Gender is required
+        </span>
+    </div>
+
+    <!-- Date of Birth -->
+    <div>
+        <label>Date of Birth:</label>
+        <input type="date" formControlName="dateOfBirth" />
+
+        <!-- Required Error -->
+        <span *ngIf="f['dateOfBirth'].touched && f['dateOfBirth'].errors?.['required']">
+            Date of Birth is required
+        </span>
+
+        <!-- Custom Min Age Error -->
+        <span *ngIf="f['dateOfBirth'].touched && f['dateOfBirth'].errors?.['minAge']">
+            Age must be at least {{ f['dateOfBirth'].errors?.['minAge']?.requiredAge }} years
+            (Your age is {{ f['dateOfBirth'].errors?.['minAge']?.actualAge }})
+        </span>
+    </div>
+
+    <!-- Is Active -->
+    <div>
+        <label>
+            <input type="checkbox" formControlName="isActive" /> Active
+        </label>
+    </div>
+
+    <!-- Country -->
+    <div>
+        <label>Country:</label>
+        <select formControlName="country">
+            <option value="">-- Select Country --</option>
+            <option *ngFor="let item of countries" [value]="item">{{ item }}</option>
+        </select>
+        <span *ngIf="f['country'].touched && f['country'].invalid">
+            Country is required
+        </span>
+    </div>
+
+    <!-- Certification -->
+    <div>
+        <label>Certifications:</label>
+        <select formControlName="certification" multiple size="5">
+            <option *ngFor="let item of certifications" [value]="item">{{ item }}</option>
+        </select>
+        <span *ngIf="f['certification'].touched && f['certification'].invalid">
+            Select at least one certification
+        </span>
+    </div>
+
+    <!-- Submit -->
+    <button type="submit">Submit</button>
+</form>
