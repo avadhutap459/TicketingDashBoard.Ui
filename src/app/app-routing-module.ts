@@ -1,8 +1,10 @@
-import { NgModule } from '@angular/core';
+import { Component, NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './Guard/auth.guard';
 import { DashboardResolver } from './Resolver/dashboard.resolver';
 import { UnsavedChangesGuard } from './Guard/unsaved-changes-guard';
+import { ComponentOne } from './Demo/components/component-one/component-one';
+import { ComponentTwo } from './Demo/components/component-two/component-two';
 
 const routes: Routes = [
   {
@@ -12,7 +14,15 @@ const routes: Routes = [
   },
   {
     path:'register',
-    loadChildren:() => import('./auth/auth/auth-module').then(m=>m.AuthModule)
+    loadChildren:() => import('./auth/auth.routes').then(m=>m.registerRoute)
+  },
+  {
+    path:'componentsOne',
+    component:ComponentOne
+  },
+  {
+    path:'componentsTwo',
+    component:ComponentTwo
   },
   {
     path:'Form-Choose',
